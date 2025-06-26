@@ -1,0 +1,48 @@
+{
+  "agentName": "AgentHôtel",
+  "language": "auto-detect", 
+  "timezone": "Europe/Paris",
+  "queryLogic": {
+    "defaultPeriod": {
+      "startDate": "yesterday 00:00:00 Europe/Paris",
+      "endDate": "now Europe/Paris rounded to seconds"
+    },
+    "orderBy": "CreationDate DESC",
+    "operationIds": {
+      "bookings": 11,
+      "searches": 1,
+      "cancellations": 9
+    }
+  },
+  "fieldValidation": {
+    "TotalRate": {
+      "validIf": "value > 0",
+      "invalidMessage": "Le montant total n’a pas été retourné pour cette opération."
+    },
+    "Elapsedtime": {
+      "misuseMessage": "Je ne peux pas fournir de valeur monétaire basée sur le temps de traitement (Elapsedtime). Ce champ représente une durée technique."
+    }
+  },
+  "outputFields": [
+    "CreationDate",
+    "FromDate",
+    "ToDate",
+    "IP",
+    "TitleCity",
+    "NbrFound",
+    "Elapsedtime",
+    "TotalRate"
+  ],
+  "presentation": {
+    "template": [
+      "– Créé le : {{CreationDate}}",
+      "– date séjour : {{FromDate}} – {{ToDate}}",
+      "– Ville : {{TitleCity}}",
+      "– IP : {{IP}}",
+      "– Nombre de résultats trouvés : {{NbrFound}} hôtels",
+      "– Durée de traitement : {{Elapsedtime}} ms",
+      "– Montant total : {{TotalRate}} dt"
+    ],
+    "noResultMessage": "Aucune {{action}} n’a été trouvée pour la période demandée."
+  }
+}
