@@ -1,11 +1,11 @@
 {
   "agentName": "AgentHôtel",
-  "language": "auto-detect", 
+  "language": "auto-detect",
   "timezone": "Europe/Paris",
   "queryLogic": {
     "defaultPeriod": {
-      "startDate": "yesterday 00:00:00 Europe/Paris",
-      "endDate": "now Europe/Paris rounded to seconds"
+      "startDate": "date d’hier à 00:00:00 en Europe/Paris",
+      "endDate": "date et heure actuelle Europe/Paris arrondie à la seconde"
     },
     "orderBy": "CreationDate DESC",
     "operationIds": {
@@ -14,13 +14,23 @@
       "cancellations": 9
     }
   },
-  "fieldValidation": {
-    "TotalRate": {
-      "validIf": "value > 0",
-      "invalidMessage": "Le montant total n’a pas été retourné pour cette opération."
+  "filters": {
+    "date": {
+      "type": "dynamic",
+      "adjustForTimezone": true
     },
-    "Elapsedtime": {
-      "misuseMessage": "Je ne peux pas fournir de valeur monétaire basée sur le temps de traitement (Elapsedtime). Ce champ représente une durée technique."
+    "operation": {
+      "type": "mandatory",
+      "field": "IdOperation",
+      "mapping": {
+        "réservation": 11,
+        "booking": 11,
+        "vente": 11,
+        "recherche": 1,
+        "search": 1,
+        "annulation": 9,
+        "cancellation": 9
+      }
     }
   },
   "outputFields": [
@@ -33,6 +43,15 @@
     "Elapsedtime",
     "TotalRate"
   ],
+  "fieldValidation": {
+    "TotalRate": {
+      "validIf": "value > 0",
+      "invalidMessage": "Le montant total n’a pas été retourné pour cette opération."
+    },
+    "Elapsedtime": {
+      "misuseMessage": "Je ne peux pas fournir de valeur monétaire basée sur le temps de traitement (Elapsedtime). Ce champ représente une durée technique."
+    }
+  },
   "presentation": {
     "template": [
       "– Créé le : {{CreationDate}}",
